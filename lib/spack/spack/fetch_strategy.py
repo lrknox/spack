@@ -1,4 +1,4 @@
-# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2023 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -35,13 +35,7 @@ from typing import List, Optional
 import llnl.util
 import llnl.util.filesystem as fs
 import llnl.util.tty as tty
-from llnl.util.filesystem import (
-    get_single_file,
-    mkdirp,
-    temp_cwd,
-    temp_rename,
-    working_dir,
-)
+from llnl.util.filesystem import get_single_file, mkdirp, temp_cwd, temp_rename, working_dir
 from llnl.util.symlink import symlink
 
 import spack.config
@@ -93,6 +87,22 @@ def _ensure_one_stage_entry(stage_path):
     stage_entries = os.listdir(stage_path)
     assert len(stage_entries) == 1
     return os.path.join(stage_path, stage_entries[0])
+
+
+def _filesummary(path, print_bytes=16):
+    try:
+        n = print_bytes
+        with open(path, "rb") as f:
+            size = os.fstat(f.fileno()).st_size
+            if size <= 2 * n:
+                short_contents = f.read(2 * n)
+            else:
+                short_contents = f.read(n)
+                f.seek(-n, 2)
+                short_contents += b"..." + f.read(n)
+        return size, short_contents
+    except OSError:
+        return 0, b""
 
 
 def fetcher(cls):
@@ -500,9 +510,14 @@ class URLFetchStrategy(FetchStrategy):
 
         checker = crypto.Checker(self.digest)
         if not checker.check(self.archive_file):
+            # On failure, provide some information about the file size and
+            # contents, so that we can quickly see what the issue is (redirect
+            # was not followed, empty file, text instead of binary, ...)
+            size, contents = _filesummary(self.archive_file)
             raise ChecksumError(
-                "%s checksum failed for %s" % (checker.hash_name, self.archive_file),
-                "Expected %s but got %s" % (self.digest, checker.sum),
+                f"{checker.hash_name} checksum failed for {self.archive_file}",
+                f"Expected {self.digest} but got {checker.sum}. "
+                f"File size = {size} bytes. Contents = {contents!r}",
             )
 
     @_needs_stage
@@ -1534,11 +1549,7 @@ def for_package_version(pkg, version):
         # performance hit for branches on older versions of git.
         # Branches cannot be cached, so we tell the fetcher not to cache tags/branches
         ref_type = "commit" if version.is_commit else "tag"
-        kwargs = {
-            "git": pkg.git,
-            ref_type: version.ref,
-            "no_cache": True,
-        }
+        kwargs = {"git": pkg.git, ref_type: version.ref, "no_cache": True}
 
         kwargs["submodules"] = getattr(pkg, "submodules", False)
 

@@ -1,4 +1,4 @@
-# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2023 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -416,11 +416,7 @@ def test_spec_needs_rebuild(monkeypatch, tmpdir):
     assert rebuild
 
 
-@pytest.mark.usefixtures(
-    "install_mockery_mutable_config",
-    "mock_packages",
-    "mock_fetch",
-)
+@pytest.mark.usefixtures("install_mockery_mutable_config", "mock_packages", "mock_fetch")
 def test_generate_index_missing(monkeypatch, tmpdir, mutable_config):
     """Ensure spack buildcache index only reports available packages"""
 

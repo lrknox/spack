@@ -1,4 +1,4 @@
-# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2023 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -569,7 +569,7 @@ def static_graph_dot(
 def graph_dot(
     specs: List[spack.spec.Spec],
     builder: Optional[DotGraphBuilder] = None,
-    deptype: Optional[Union[str, Tuple[str, ...]]] = "all",
+    deptype: spack.dependency.DependencyArgument = "all",
     out: Optional[TextIO] = None,
 ):
     """DOT graph of the concrete specs passed as input.

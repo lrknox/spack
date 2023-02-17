@@ -1,4 +1,4 @@
-# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2023 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -154,10 +154,7 @@ class AppleClang(spack.compilers.clang.Clang):
                 ),
             )
 
-            real_dirs = [
-                "Toolchains/XcodeDefault.xctoolchain/usr/bin",
-                "usr/bin",
-            ]
+            real_dirs = ["Toolchains/XcodeDefault.xctoolchain/usr/bin", "usr/bin"]
 
             bins = ["c++", "c89", "c99", "cc", "clang", "clang++", "cpp"]
 

@@ -1,4 +1,4 @@
-# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2023 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -715,19 +715,12 @@ fi
     # Add compiler to config
     compiler_info = {
         "spec": "gcc@foo",
-        "paths": {
-            "cc": gcc,
-            "cxx": None,
-            "f77": None,
-            "fc": None,
-        },
+        "paths": {"cc": gcc, "cxx": None, "f77": None, "fc": None},
         "flags": {},
         "operating_system": "fake",
         "target": "fake",
         "modules": ["turn_on"],
-        "environment": {
-            "set": {"CMP_VER": test_version},
-        },
+        "environment": {"set": {"CMP_VER": test_version}},
         "extra_rpaths": [],
     }
     compiler_dict = {"compiler": compiler_info}
@@ -768,19 +761,12 @@ fi
     # Add compiler to config
     compiler_info = {
         "spec": "gcc@foo",
-        "paths": {
-            "cc": gcc,
-            "cxx": None,
-            "f77": None,
-            "fc": None,
-        },
+        "paths": {"cc": gcc, "cxx": None, "f77": None, "fc": None},
         "flags": {},
         "operating_system": "fake",
         "target": "fake",
         "modules": ["turn_on"],
-        "environment": {
-            "set": {"CMP_VER": test_version},
-        },
+        "environment": {"set": {"CMP_VER": test_version}},
         "extra_rpaths": [],
     }
     compiler_dict = {"compiler": compiler_info}
@@ -829,12 +815,7 @@ echo "4.4.4"
     # Add compiler to config
     compiler_info = {
         "spec": "gcc@foo",
-        "paths": {
-            "cc": gcc,
-            "cxx": None,
-            "f77": None,
-            "fc": None,
-        },
+        "paths": {"cc": gcc, "cxx": None, "f77": None, "fc": None},
         "flags": {},
         "operating_system": "fake",
         "target": "fake",

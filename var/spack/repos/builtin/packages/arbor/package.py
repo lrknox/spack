@@ -1,4 +1,4 @@
-# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2023 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -13,11 +13,11 @@ class Arbor(CMakePackage, CudaPackage):
     homepage = "https://arbor-sim.org"
     git = "https://github.com/arbor-sim/arbor.git"
     url = "https://github.com/arbor-sim/arbor/releases/download/v0.8.1/arbor-v0.8.1-full.tar.gz"
-    maintainers = ["bcumming", "brenthuisman", "haampie", "schmitts"]
+    maintainers("bcumming", "brenthuisman", "haampie", "schmitts")
 
     version("master", branch="master", submodules=True)
     version(
-        "0.8",
+        "0.8.1",
         sha256="caebf96676ace6a9c50436541c420ca4bb53f0639dcab825de6fa370aacf6baa",
         url="https://github.com/arbor-sim/arbor/releases/download/v0.8.1/arbor-v0.8.1-full.tar.gz",
     )
@@ -42,18 +42,12 @@ class Arbor(CMakePackage, CudaPackage):
         url="https://github.com/arbor-sim/arbor/releases/download/v0.5.2/arbor-v0.5.2-full.tar.gz",
     )
 
-    variant(
-        "assertions",
-        default=False,
-        description="Enable arb_assert() assertions in code.",
-    )
+    variant("assertions", default=False, description="Enable arb_assert() assertions in code.")
     variant("doc", default=False, description="Build documentation.")
     variant("mpi", default=False, description="Enable MPI support")
     variant("python", default=True, description="Enable Python frontend support")
     variant(
-        "vectorize",
-        default=False,
-        description="Enable vectorization of computational kernels",
+        "vectorize", default=False, description="Enable vectorization of computational kernels"
     )
     variant(
         "gpu_rng",
